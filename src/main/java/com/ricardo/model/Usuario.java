@@ -1,18 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ricardo.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 /**
  *
  * @author Ricardo Toledo Barria
@@ -70,6 +71,23 @@ public class Usuario {
         this.estado = estado;
     }
     
-    
-    
+    @ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Usuarios_Roles",
+            joinColumns = {
+                @JoinColumn(name = "usuario_id")
+            },
+            inverseJoinColumns = {
+                @JoinColumn(name = "rol_id")
+            }
+    )
+    private List<Rol> roles = new ArrayList<Rol>();
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
 }

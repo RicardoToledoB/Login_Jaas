@@ -18,7 +18,7 @@ import org.hibernate.Transaction;
  * @author Ricardo Toledo Barria
  */
 public class UsuarioDAO {
-    public boolean create(Usuario c) {
+    public boolean save(Usuario c) {
         boolean bandera; 
         SessionFactory sf = null;
         Session sesion = null;

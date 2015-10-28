@@ -5,11 +5,16 @@
  */
 package com.ricardo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -57,6 +62,16 @@ public class Rol {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy="roles")
+    private List<Usuario> usuarios=new ArrayList<Usuario>();
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
     
 }
