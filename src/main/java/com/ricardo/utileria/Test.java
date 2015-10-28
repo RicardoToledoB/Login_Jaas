@@ -7,6 +7,7 @@ package com.ricardo.utileria;
 
 import com.ricardo.dao.RolDAO;
 import com.ricardo.dao.UsuarioDAO;
+import com.ricardo.dao.UsuarioDAOImpl;
 import com.ricardo.model.Rol;
 import com.ricardo.model.Usuario;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Test {
         List<Rol> roles=new ArrayList<Rol>();
         roles.add(rol);
         user.setRoles(roles);
-        UsuarioDAO uDAO=new UsuarioDAO();
+        UsuarioDAO uDAO=new UsuarioDAOImpl();
         uDAO.save(user);
         
     }
