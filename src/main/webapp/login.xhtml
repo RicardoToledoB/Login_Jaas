@@ -3,10 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Test Hibernate</title>
     </h:head>
     <h:body>
-        Login
+        <h:form id="formulario">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="usuario" value="Nombre Usuario:"/>
+                <h:inputText id="usuario"/>
+                <h:outputLabel for="clave" value="Clave:"/>
+                <h:inputSecret id="clave"/>
+                <h:commandButton value="Ingresar Sistema"/>
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>
 
