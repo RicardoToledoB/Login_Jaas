@@ -12,9 +12,10 @@ import org.hibernate.Transaction;
  *
  * @author ricardo
  */
-public class UsuarioDAOImpl implements UsuarioDAO{
-     public boolean save(Usuario c) {
-        boolean bandera; 
+public class UsuarioDAOImpl implements UsuarioDAO {
+
+    public boolean save(Usuario c) {
+        boolean bandera;
         SessionFactory sf = null;
         Session sesion = null;
         Transaction tx = null;
@@ -22,16 +23,17 @@ public class UsuarioDAOImpl implements UsuarioDAO{
             sf = HibernateUtil.getSessionFactory();
             sesion = sf.openSession();
             tx = sesion.beginTransaction();
-            
             sesion.save(c);
             tx.commit();
-            sesion.close();
-            bandera=true;
+            //sesion.close();
+            bandera = true;
         } catch (Exception ex) {
-            bandera=false;
+            bandera = false;
             tx.rollback();
             ex.printStackTrace();
             throw new RuntimeException("NO SE PUDO INSERTAR");
+        } finally {
+            sesion.close();
         }
         return bandera;
     }
@@ -49,11 +51,11 @@ public class UsuarioDAOImpl implements UsuarioDAO{
             sesion.delete(contactos);
             tx.commit();
             sesion.close();
-            bandera=true;
+            bandera = true;
         } catch (Exception ex) {
             tx.rollback();
             ex.printStackTrace();
-            bandera=false;
+            bandera = false;
             throw new RuntimeException("NO SE PUDO BORRAR");
         }
         return bandera;
@@ -69,10 +71,30 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     }
 
     public Usuario buscarContactos(int id) {
+
         SessionFactory sf = HibernateUtil.getSessionFactory();
         Session sesion = sf.openSession();
         Usuario c = (Usuario) sesion.get(Usuario.class, id);
+        sesion.close();
         return c;
+
+    }
+
+    public void update(Usuario u) {
+        SessionFactory sf = null;
+        Session sesion = null;
+        Transaction tx = null;
+        try {
+            sf = HibernateUtil.getSessionFactory();
+            sesion = sf.openSession();
+            tx = sesion.beginTransaction();
+            sesion.update(u);
+            tx.commit();
+            sesion.close();
+
+        } catch (Exception ex) {
+
+        }
     }
 
     public boolean edit(Usuario c) {
@@ -81,42 +103,43 @@ public class UsuarioDAOImpl implements UsuarioDAO{
         Session sesion = null;
         Transaction tx = null;
         try {
-            sf=HibernateUtil.getSessionFactory();
-            sesion=sf.openSession();
-            tx=sesion.beginTransaction();
-            Usuario pbuscar=(Usuario)sesion.get(Usuario.class, c.getId());
+            sf = HibernateUtil.getSessionFactory();
+            sesion = sf.openSession();
+            tx = sesion.beginTransaction();
+            Usuario pbuscar = (Usuario) sesion.get(Usuario.class, c.getId());
             pbuscar.setUsuario(c.getUsuario());
             pbuscar.setEstado(c.getEstado());
-                  
-            
+
             sesion.update(pbuscar);
             tx.commit();
             sesion.close();
-             bandera=true;   
+            bandera = true;
         } catch (Exception ex) {
             tx.rollback();
             ex.printStackTrace();
-            bandera=false;
+            bandera = false;
             throw new RuntimeException("NO SE PUDO EDITAR");
-            
+
         }
         return bandera;
     }
-    public Usuario findByUsuario(Usuario user){
-             Usuario model=null;
-             SessionFactory sf = HibernateUtil.getSessionFactory();
-             Session sesion = sf.openSession();
-             String sql="from Usuario where usuario='"+user.getUsuario()+"'";
-             try{
-                model=(Usuario) sesion.createQuery(sql).uniqueResult();
-             }catch(Exception ex){
-             }
-             return model;
+
+    public Usuario findByUsuario(Usuario user) {
+        Usuario model = null;
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session sesion = sf.openSession();
+        String sql = "from Usuario where usuario='" + user.getUsuario() + "'";
+        try {
+            model = (Usuario) sesion.createQuery(sql).uniqueResult();
+        } catch (Exception ex) {
+        }
+        return model;
     }
-    public Usuario login(Usuario usuario){
-        Usuario model=this.findByUsuario(usuario);
-        if(model!=null){
-            if(!usuario.getClave().equals(model.getClave())){
+
+    public Usuario login(Usuario usuario) {
+        Usuario model = this.findByUsuario(usuario);
+        if (model != null) {
+            if (!usuario.getClave().equals(model.getClave())) {
                 return null;
             }
         }
