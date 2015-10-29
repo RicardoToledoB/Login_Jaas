@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Proxy;
 
 /**
  *
@@ -23,6 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Roles")
+
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,7 +65,7 @@ public class Rol {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    @ManyToMany(fetch=FetchType.LAZY,mappedBy="roles")
+    @ManyToMany(mappedBy="roles")
     private List<Usuario> usuarios=new ArrayList<Usuario>();
 
     public List<Usuario> getUsuarios() {

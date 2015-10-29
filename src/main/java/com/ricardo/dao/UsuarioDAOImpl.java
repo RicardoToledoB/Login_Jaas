@@ -75,7 +75,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         SessionFactory sf = HibernateUtil.getSessionFactory();
         Session sesion = sf.openSession();
         Usuario c = (Usuario) sesion.get(Usuario.class, id);
-        sesion.close();
+        
         return c;
 
     }

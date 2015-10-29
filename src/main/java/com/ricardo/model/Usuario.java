@@ -14,12 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Proxy;
 /**
  *
  * @author Ricardo Toledo Barria
  */
 @Entity
 @Table(name="Usuarios")
+
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -71,7 +73,7 @@ public class Usuario {
         this.estado = estado;
     }
     
-    @ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "Usuarios_Roles",
             joinColumns = {

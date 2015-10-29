@@ -10,5 +10,6 @@
     <property name="hibernate.show_sql">true</property>
     <mapping class="com.ricardo.model.Usuario"/>
     <mapping class="com.ricardo.model.Rol"/>
+  
   </session-factory>
 </hibernate-configuration>
